@@ -1,4 +1,4 @@
-/* Copyright (c) 2008-2021, The Linux Foundation. All rights reserved.
+/* Copyright (c) 2008-2020, The Linux Foundation. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and
@@ -1996,15 +1996,13 @@ static int diag_switch_logging(struct diag_logging_mode_param_t *param)
 				driver->pcie_switch_pid = current->tgid;
 			}
 			if (new_mode == DIAG_PCIE_MODE) {
-				driver->transport_set =
-					DIAG_ROUTE_TO_PCIE;
+				driver->transport_set = DIAG_ROUTE_TO_PCIE;
 				diagmem_setsize(POOL_TYPE_MUX_APPS,
 					itemsize_pcie_apps,
 					(poolsize_pcie_apps + 1 +
 						(NUM_PERIPHERALS * 6)));
 			} else if (new_mode == DIAG_USB_MODE) {
-				driver->transport_set =
-					DIAG_ROUTE_TO_USB;
+				driver->transport_set = DIAG_ROUTE_TO_USB;
 				diagmem_setsize(POOL_TYPE_MUX_APPS,
 					itemsize_usb_apps,
 					(poolsize_usb_apps + 1 +
@@ -3973,8 +3971,14 @@ exit:
 				put_task_struct(task_s);
 				put_pid(pid_struct);
 				mutex_lock(&driver->diagchar_mutex);
+/* SONY_BEGIN (Workaround for unable to receive log packet at the same time on SM8150 and SDX50M) */
+				if (driver->data_ready[index] & DCI_DATA_TYPE) {
+/* SONY_END (Workaround for unable to receive log packet at the same time on SM8150 and SDX50M) */
 				driver->data_ready[index] ^= DCI_DATA_TYPE;
 				atomic_dec(&driver->data_ready_notif[index]);
+/* SONY_BEGIN (Workaround for unable to receive log packet at the same time on SM8150 and SDX50M) */
+				}
+/* SONY_END (Workaround for unable to receive log packet at the same time on SM8150 and SDX50M) */
 				mutex_unlock(&driver->diagchar_mutex);
 				mutex_unlock(&driver->dci_mutex);
 				goto end;
@@ -4402,7 +4406,7 @@ static void diag_init_transport(void)
 	 * The number of buffers encompasses Diag data generated on
 	 * the Apss processor + 1 for the responses generated
 	 * exclusively on the Apps processor + data from data channels
-	 *(4 channels per peripheral) + data from command channels (2)
+	 *(4 channels periperipheral) + data from command channels (2)
 	 */
 	diagmem_setsize(POOL_TYPE_MUX_APPS, itemsize_pcie_apps,
 		poolsize_pcie_apps + 1 + (NUM_PERIPHERALS * 6));
@@ -4421,7 +4425,7 @@ static void diag_init_transport(void)
 	 * The number of buffers encompasses Diag data generated on
 	 * the Apss processor + 1 for the responses generated
 	 * exclusively on the Apps processor + data from data channels
-	 *(4 channels per peripheral) + data from command channels (2)
+	 *(4 channels periperipheral) + data from command channels (2)
 	 */
 	diagmem_setsize(POOL_TYPE_MUX_APPS, itemsize_usb_apps,
 		poolsize_usb_apps + 1 + (NUM_PERIPHERALS * 6));
