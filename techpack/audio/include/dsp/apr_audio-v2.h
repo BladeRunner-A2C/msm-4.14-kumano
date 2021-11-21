@@ -920,6 +920,171 @@ struct audproc_enable_param_t {
 	uint32_t                  enable;
 };
 
+#define AUDPROC_MODULE_ID_RAMP_UP_CLIPPER_1      0x10101100
+#define AUDPROC_PARAM_ID_RAMP_UP_CLIPPER_ENABLE  0x10101001
+
+struct audproc_enable_rampup_clipper_module {
+	uint32_t	num_channels;
+	uint32_t	clipper_enable_left;
+	uint32_t	clipper_enable_right;
+	uint32_t	gain_fade_in_enable_left;
+	uint32_t	gain_fade_in_enable_right;
+} __packed;
+
+struct audproc_volume_params {
+	uint32_t	volume_l;
+	uint32_t	volume_r;
+} __packed;
+
+#define MAX_NUM_CHANNELS_ADDX 2
+struct audproc_addx_value {
+    uint32_t value[MAX_NUM_CHANNELS_ADDX];
+} __packed;
+
+struct audproc_channel_type_iir_pregain_pair {
+   uint8_t channel_type;
+   uint8_t reserved1;
+   uint8_t reserved2;
+   uint8_t reserved3;
+   int32_t preGain;
+} __packed;
+
+#define IIR_TUNING_FILTER_MAX_CHANNELS_V2 32
+struct audproc_mchan_iir_pregain
+{
+   uint32_t num_channels;
+   struct audproc_channel_type_iir_pregain_pair preGain_settings[IIR_TUNING_FILTER_MAX_CHANNELS_V2];
+} __packed;
+
+/*
+struct audproc_channel_type_iir_config_pair {
+   uint8_t channel_type;
+   uint8_t reserved;
+   uint16_t num_biquad_stages;
+   int32_t ulFilterCoeffs[0];
+   int16_t sNumShiftFactor[0];
+} __packed;
+*/
+struct audproc_channel_type_iir_config_pair_iir1 {
+   uint8_t channel_type;
+   uint8_t reserved;
+   uint16_t num_biquad_stages;
+   int32_t ulFilterCoeffs[20];
+   int16_t sNumShiftFactor[4];
+} __packed;
+
+struct audproc_channel_type_iir_config_pair_iir5 {
+   uint8_t channel_type;
+   uint8_t reserved;
+   uint16_t num_biquad_stages;
+   int32_t ulFilterCoeffs[5];
+   int16_t sNumShiftFactor[1];
+   int16_t extraPadding[1];
+} __packed;
+
+/*
+struct audproc_mchan_iir_config {
+   uint32_t num_channels;
+   struct audproc_channel_type_iir_config_pair MultiChannelIIRConfig[0];
+} __packed;
+*/
+struct audproc_mchan_iir_config_iir1 {
+   uint32_t num_channels;
+   struct audproc_channel_type_iir_config_pair_iir1 MultiChannelIIRConfig[2];
+} __packed;
+
+struct audproc_mchan_iir_config_iir5 {
+   uint32_t num_channels;
+   struct audproc_channel_type_iir_config_pair_iir5 MultiChannelIIRConfig[2];
+} __packed;
+
+#define AUDPROC_MODULE_ID_INV_VOL_CTRL  0x10002200
+#define AUDPROC_PARAM_ID_INV_VOL_ENABLE 0x10002201
+#define AUDPROC_PARAM_ID_INV_VOL_CTRL   0x10002202
+
+struct audproc_inverse_audio_volume_params {
+	uint32_t	volume_l;
+	uint32_t	volume_r;
+} __packed;
+
+#define AUDPROC_MODULE_ID_LOG10                  0x10002070
+#define AUDPROC_PARAM_ID_LOG10_ENABLE            0x10002071
+
+#define AUDPROC_MODULE_ID_LOG10GAIN              0x10002080
+#define AUDPROC_PARAM_ID_LOG10GAIN_ENABLE        0x10002081
+
+#define AUDPROC_MODULE_ID_NOISE_CUT              0x10002060
+#define AUDPROC_PARAM_ID_NOISE_CUT_ENABLE        0x10002061
+
+#define AUDPROC_MODULE_ID_NEGATIVE_CUT           0x10002040
+#define AUDPROC_PARAM_ID_NEGATIVE_CUT_ENABLE     0x10002041
+
+#define AUDPROC_MODULE_ID_VOLUME_LIMITER         0x10002100
+#define AUDPROC_MODULE_ID_VOLUME_LIMITER_1       0x10002110
+#define AUDPROC_MODULE_ID_VOLUME_LIMITER_2       0x10002120
+#define AUDPROC_MODULE_ID_VOLUME_LIMITER_3       0x10002130
+#define AUDPROC_MODULE_ID_VOLUME_LIMITER_4       0x10002140
+#define AUDPROC_MODULE_ID_VOLUME_LIMITER_5       0x10002150
+#define AUDPROC_MODULE_ID_VOLUME_LIMITER_6       0x10002160
+#define AUDPROC_PARAM_ID_VOLUME_ENABLE           0x10002101
+#define AUDPROC_PARAM_ID_VOLUME_CTRL             0x10002102
+
+#define AUDPROC_MODULE_ID_DUAL_MONO              0x10002030
+#define AUDPROC_MODULE_ID_DUAL_MONO1             0x10012030
+#define AUDPROC_PARAM_ID_DUAL_MONO_ENABLE        0x10002031
+
+#define AUDPROC_MODULE_ID_ABS                    0x10002020
+#define AUDPROC_PARAM_ID_ABS_ENABLE              0x10002021
+
+#define AUDPROC_MODULE_ID_ADD1                   0x10002050
+#define AUDPROC_PARAM_ID_ADD1_ENABLE             0x10002051
+
+#define AUDPROC_MODULE_ID_ADDX                   0x10103000
+#define AUDPROC_PARAM_ID_ADDX_ENABLE             0x10103001
+#define AUDPROC_PARAM_ID_ADDX_VALUE              0x10103002
+
+#define AUDPROC_MODULE_ID_FORMAT_CONVERTER       0x10005000
+#define AUDPROC_PARAM_ID_FORMAT_CONVERTER_ENABLE 0x10005001
+
+#define AUDPROC_MODULE_ID_MCHAN_IIR_1            0x1011031F
+#define AUDPROC_MODULE_ID_MCHAN_IIR_2            0x1021031F
+#define AUDPROC_MODULE_ID_MCHAN_IIR_3            0x1031031F
+#define AUDPROC_MODULE_ID_MCHAN_IIR_4            0x1041031F
+#define AUDPROC_MODULE_ID_MCHAN_IIR_5            0x1051031F
+#define AUDPROC_PARAM_ID_MCHAN_IIR_ENABLE        0x0001031C
+#define AUDPROC_PARAM_ID_MCHAN_IIR_TUNING_FILTER_PREGAIN        0x0001031D
+#define AUDPROC_PARAM_ID_MCHAN_IIR_TUNING_FILTER_CONFIG_PARAMS  0x0001031E
+
+struct audproc_channel_type_iir_enable
+{
+	uint8_t channel_type;
+	uint8_t reserved1;
+	uint8_t reserved2;
+	uint8_t reserved3;
+	uint32_t enable_flag;
+} __packed;
+
+struct audproc_enable_module_mchan_iir
+{
+	uint32_t num_channels;
+	struct audproc_channel_type_iir_enable enable_flag_settings[32];
+} __packed;
+
+#define AUDPROC_MODULE_ID_DELAY                  0x10004000
+#define AUDPROC_MODULE_ID_DELAY_1                0x10004010
+#define AUDPROC_PARAM_ID_DELAY_ENABLE            0x10004001
+
+struct audproc_enable_module_mono {
+	uint32_t	enable_flag;
+} __packed;
+
+#define MAX_NUM_CHANNELS 2
+
+struct audproc_enable_module_stereo {
+	uint32_t	num_channels;
+	uint32_t	enable[MAX_NUM_CHANNELS];
+} __packed;
+
 /*
  * Allows a client to control the gains on various session-to-COPP paths.
  */
@@ -8629,11 +8794,18 @@ struct asm_stream_cmd_open_read_compressed {
 								0x11000000
 #define ADM_CMD_COPP_OPENOPOLOGY_ID_SPEAKER_MCH_PEAK_VOL \
 								0x0001031B
+#define ADM_CMD_COPP_OPENOPOLOGY_ID_SPEAKER_RX_MCH_IIR_COPP_MBDRC_V3 \
+								0x11000004
+#define ADM_CMD_COPP_OPENOPOLOGY_ID_SPEAKER_STEREO_AUDIO_COPP_SOMC_HP \
+								0x11000006
+#define ADM_CMD_COPP_OPENOPOLOGY_ID_SPEAKER_RX_MCH_FIR_IIR_COPP_MBDRC_V3 \
+								0x11000009
 #define ADM_CMD_COPP_OPENOPOLOGY_ID_MIC_MONO_AUDIO_COPP  0x00010315
 #define ADM_CMD_COPP_OPENOPOLOGY_ID_MIC_STEREO_AUDIO_COPP 0x00010316
 #define AUDPROC_COPPOPOLOGY_ID_MCHAN_IIR_AUDIO           0x00010715
 #define ADM_CMD_COPP_OPENOPOLOGY_ID_DEFAULT_AUDIO_COPP   0x00010BE3
 #define ADM_CMD_COPP_OPENOPOLOGY_ID_PEAKMETER_AUDIO_COPP 0x00010317
+#define ADM_CMD_COPP_OPENOPOLOGY_ID_AUDIO_RX_SONY_SPEAKER 0x11000010
 #define AUDPROC_MODULE_ID_AIG   0x00010716
 #define AUDPROC_PARAM_ID_AIG_ENABLE		0x00010717
 #define AUDPROC_PARAM_ID_AIG_CONFIG		0x00010718
@@ -11085,6 +11257,45 @@ struct afe_param_id_clip_bank_sel {
 	uint32_t bank_map[AFE_CLIP_MAX_BANKS];
 } __packed;
 
+/* SOMC effect start */
+/* Module/Parameter IDs */
+#define ASM_MODULE_ID_SONYBUNDLE            0x10002010
+
+#define PARAM_ID_SB_COMMON_USER_PARAM       0x10002011
+#define PARAM_ID_SB_DYNAMICNORMALIZER_USER_PARAM 0x10002012
+#define PARAM_ID_SB_SFORCE_USER_PARAM       0x10002013
+#define PARAM_ID_SB_VPT20_USER_PARAM        0x10002014
+#define PARAM_ID_SB_CLEARPHASE_HP_USER_PARAM 0x10002015
+#define PARAM_ID_SB_CLEARAUDIO_USER_PARAM   0x10002016
+#define PARAM_ID_SB_CLEARAUDIO_VOLUME_PARAM 0x10002017
+#define PARAM_ID_SB_CLEARPHASE_SP_USER_PARAM 0x10002018
+#define PARAM_ID_SB_XLOUD_USER_PARAM        0x10002019
+
+#define PARAM_ID_SB_CLEARPHASE_HP_TUNING    0x1000201A
+#define PARAM_ID_SB_SFORCE_TUNING           0x1000201B
+#define PARAM_ID_SB_CLEARPHASE_SP_TUNING    0x1000201C
+#define PARAM_ID_SB_XLOUD_TUNING            0x1000201D
+
+#define ASM_STREAM_POSTPROC_TOPO_ID_SONY    0x10002101
+
+struct clearphase_hp_tuning_params {
+	unsigned char coefs[2064];
+} __packed;
+
+struct s_force_tuning_params {
+	unsigned char coefs[1016];
+} __packed;
+
+struct clearphase_sp_tuning_params {
+	unsigned char coefs[2360];
+} __packed;
+
+struct xloud_tuning_params {
+	unsigned int level;
+	unsigned char coefs[512];
+} __packed;
+/* SOMC effect end */
+
 /* ERROR CODES */
 /* Success. The operation completed with no errors. */
 #define ADSP_EOK          0x00000000
@@ -11381,7 +11592,7 @@ struct afe_clk_set {
 	 * for enable and disable clock.
 	 *	"clk_freq_in_hz", "clk_attri", and "clk_root"
 	 *	are ignored in disable clock case.
-	 *	@values 
+	 *	@values\A0
 	 *	- 0 -- Disabled
 	 *	- 1 -- Enabled  @tablebulletend
 	 */

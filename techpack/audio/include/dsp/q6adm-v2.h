@@ -112,6 +112,9 @@ int adm_pack_and_set_one_pp_param(int port_id, int copp_idx,
 				  struct param_hdr_v3 param_hdr,
 				  u8 *param_data);
 
+int adm_ahc_send_params(int port_id, int copp_idx, char *params,
+			uint32_t params_length);
+
 int adm_open(int port, int path, int rate, int mode, int topology,
 			   int perf_mode, uint16_t bits_per_sample,
 			   int app_type, int acdbdev_id);
@@ -215,4 +218,34 @@ int adm_programable_channel_mixer(int port_id, int copp_idx, int session_id,
 void msm_dts_srs_acquire_lock(void);
 void msm_dts_srs_release_lock(void);
 void adm_set_native_mode(int mode);
+int adm_set_rampup_clipper(int port_id, int copp_idx, uint32_t enable,
+				uint32_t module_id);
+
+int adm_set_input_volume(int port_id, int copp_idx,
+				uint32_t volume_l, uint32_t volume_r);
+int adm_set_beat_bass_input_volume(int port_id, int copp_idx,
+				uint32_t volume_l, uint32_t volume_r);
+int adm_set_beat_bass_output_volume(int port_id, int copp_idx,
+				uint32_t volume_l, uint32_t volume_r);
+int adm_set_initial_value_fail_safe(int port_id, int copp_idx);
+int adm_set_level_volume(int port_id, int copp_idx,
+				uint32_t volume_l, uint32_t volume_r);
+int adm_set_hpf_a(int port_id, int copp_idx,
+				uint32_t enable_l, uint32_t enable_r);
+int adm_set_hpf_b(int port_id, int copp_idx,
+				uint32_t enable_l, uint32_t enable_r);
+int adm_set_log10(int port_id, int copp_idx,
+				uint32_t enable_l, uint32_t enable_r);
+int adm_set_add1(int port_id, int copp_idx,
+				uint32_t enable_l, uint32_t enable_r);
+int adm_set_addx(int port_id, int copp_idx,
+				uint32_t enable_l, uint32_t enable_r);
+int adm_set_negative_cut(int port_id, int copp_idx,
+				uint32_t enable_l, uint32_t enable_r);
+int adm_set_inverse_volume(int port_id, int copp_idx,
+				uint32_t volume_l, uint32_t volume_r);
+int adm_set_delay_module_state(int port_id, int copp_idx, uint32_t enable);
+
+int adm_set_all_bex_modules(int port_id, int copp_idx,
+				uint32_t module_id, uint32_t param_id, uint32_t enable_flag);
 #endif /* __Q6_ADM_V2_H__ */

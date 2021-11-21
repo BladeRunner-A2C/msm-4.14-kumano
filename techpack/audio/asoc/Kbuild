@@ -85,6 +85,15 @@ UAPI_INC :=	-I$(AUDIO_ROOT)/include/$(UAPI_DIR)
 COMMON_DIR :=	include
 COMMON_INC :=	-I$(AUDIO_ROOT)/$(COMMON_DIR)
 
+############ SOMC ############
+SOMC_AUDIO_ROOT := $(ANDROID_BUILD_TOP)/vendor/semc/hardware/audio/kernel-modules
+SOMC_DIR :=	include
+SOMC_INC :=	-I$(SOMC_AUDIO_ROOT)/$(SOMC_DIR)
+
+########### SOMC UAPI ############
+SOMC_UAPI_DIR :=       uapi
+SOMC_UAPI_INC :=       -I$(SOMC_AUDIO_ROOT)/include/$(SOMC_UAPI_DIR)
+
 ############ ASoC Drivers ############
 
 
@@ -172,7 +181,10 @@ endif
 LINUX_INC +=	-Iinclude/linux
 
 INCS +=		$(COMMON_INC) \
-		$(UAPI_INC)
+		$(UAPI_INC) \
+		$(SOMC_INC) \
+		$(SOMC_UAPI_INC)
+INCS += -include $(SOMC_AUDIO_ROOT)/config/somcaudioconf.h
 
 EXTRA_CFLAGS += $(INCS)
 
@@ -208,6 +220,7 @@ KBUILD_EXTRA_SYMBOLS +=$(OUT)/obj/vendor/qcom/opensource/audio-kernel/asoc/codec
 KBUILD_EXTRA_SYMBOLS +=$(OUT)/obj/vendor/qcom/opensource/audio-kernel/asoc/codecs/wcd937x/Module.symvers
 KBUILD_EXTRA_SYMBOLS +=$(OUT)/obj/vendor/qcom/opensource/audio-kernel/asoc/codecs/sdm660_cdc/Module.symvers
 KBUILD_EXTRA_SYMBOLS +=$(OUT)/obj/vendor/qcom/opensource/audio-kernel/asoc/codecs/msm_sdw/Module.symvers
+KBUILD_EXTRA_SYMBOLS +=$(OUT)/obj/vendor/semc/hardware/audio/kernel-modules/ahc/Module.symvers
 endif
 ifeq ($(KERNEL_BUILD), 1)
 	obj-y += codecs/
